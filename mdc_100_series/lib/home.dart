@@ -35,6 +35,7 @@ class HomePage extends StatelessWidget {
     return products.map((product){
       return Card(
         clipBehavior: Clip.antiAlias,
+        elevation: 0.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,10 +49,11 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(product.name,style: theme.textTheme.titleLarge,maxLines: 1),
-                  const SizedBox(height: 8.0),
+                  Text(product.name,style: theme.textTheme.titleLarge,softWrap: false,overflow: TextOverflow.ellipsis,maxLines: 1),
+                  const SizedBox(height: 4.0),
                   Text(formatter.format(product.price),style: theme.textTheme.titleSmall),
                 ],
               ),

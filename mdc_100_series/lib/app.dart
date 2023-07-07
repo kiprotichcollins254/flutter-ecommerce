@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'login.dart';
+import 'theme/colors.dart';
 
 // TODO: Convert ShrineApp to stateful widget (104)
 class ShrineApp extends StatelessWidget {
@@ -24,7 +25,7 @@ class ShrineApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shrine',
+      title: 'Kipbz Collections',
       initialRoute: '/login',
       routes: {
         '/login': (BuildContext context) => const LoginPage(),
@@ -34,11 +35,58 @@ class ShrineApp extends StatelessWidget {
         // TODO: Pass _currentCategory for frontLayer (104)
         // TODO: Change backLayer field value to CategoryMenuPage (104)
       },
-      // TODO: Customize the theme (103)
-      theme: ThemeData.light(useMaterial3: true),
+      theme: _kipbzCollectionsTheme,
     );
   }
 }
 
 // TODO: Build a Shrine Theme (103)
-// TODO: Build a Shrine Text Theme (103)
+final ThemeData _kipbzCollectionsTheme = _buildKCollectionsTheme();
+
+ThemeData _buildKCollectionsTheme() {
+  final ThemeData base = ThemeData.light(useMaterial3: true);
+  return base.copyWith(
+    colorScheme: base.colorScheme.copyWith(
+      primary: kKipbzCollectionsPink100,
+      onPrimary: kKipbzCollectionsBrown900,
+      secondary: kKipbzCollectionsBrown900,
+      error: kKipbzCollectionsErrorRed,
+    ),
+    // TODO:ADD THE TEXT THEME
+    textTheme: _buildKipbzTextTheme(base.textTheme),
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionColor: kKipbzCollectionsPink100,
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 2.0,
+          color: kKipbzCollectionsBrown900
+        )
+      ),
+      floatingLabelStyle: TextStyle(
+        color: kKipbzCollectionsBrown900,
+      ),
+    )
+  );
+}
+
+TextTheme _buildKipbzTextTheme(TextTheme base) {
+  return base
+      .copyWith(
+        headlineSmall:
+            base.headlineSmall!.copyWith(fontWeight: FontWeight.w500),
+        titleLarge: base.titleLarge!.copyWith(fontSize: 18.0),
+        bodySmall: base.bodySmall!
+            .copyWith(fontWeight: FontWeight.w400, fontSize: 14.0),
+        bodyLarge: base.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 16.0,
+        ),
+      )
+      .apply(
+          fontFamily: 'Rubik',
+          displayColor: kKipbzCollectionsBrown900,
+          bodyColor: kKipbzCollectionsBrown900);
+}

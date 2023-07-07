@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:shrine/theme/colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -37,21 +38,26 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset('assets/diamond.png'),
                 const SizedBox(height: 16.0),
-                const Text('SHRINE'),
+              Text(
+                  'Kipbz Collections',
+                   style: Theme.of(context).textTheme.headlineSmall,),
               ],
             ),
             const SizedBox(height: 120.0),
-            // TODO: Remove filled: true values (103)
             TextField(
               controller: _userNameController,
               decoration:
-                  const InputDecoration(filled: true, labelText: "UserName"),
+                  const InputDecoration(
+                    labelText: "UserName"
+                    ),
             ),
             const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
               decoration: 
-                     const InputDecoration(filled: true, labelText: "Password"),
+                     const InputDecoration(
+                      labelText: "Password"
+                      ),
               obscureText: true,
             ),
            
@@ -64,12 +70,22 @@ class _LoginPageState extends State<LoginPage> {
                       _userNameController.clear();
                       _passwordController.clear();
                     },
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).colorScheme.secondary
+                    ),
                     child: const Text("Clear")),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Next"))
+                    child: const Text("Next"),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: kKipbzCollectionsBrown900,
+                      backgroundColor: kKipbzCollectionsPink100,
+                      elevation: 8.0
+                    ),
+                    
+                    )
               ],
             )
           ],
