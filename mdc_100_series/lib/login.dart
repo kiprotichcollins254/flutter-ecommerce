@@ -25,7 +25,51 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-  // TODO: Add text editing controllers (101)
+  bool emailerrors = false;
+  bool passworderrors = false;
+  bool validform = false;
+  String emailmessage = '';
+  String passwordmessage = '';
+
+  // login function
+  void _loginUser() {
+    // ready login from
+    if (_userNameController.text.isEmpty) {
+      setState(() {
+        emailerrors = true;
+        emailmessage = 'Empty Email';
+        validform = false;
+      });
+    } else {
+      setState(() {
+        emailerrors = false;
+        emailmessage = '';
+        validform = true;
+      });
+    }
+    if (_passwordController.text.isEmpty) {
+      setState(() {
+        passworderrors = true;
+        passwordmessage = 'Password Empty';
+        validform = false;
+      });
+    } else {
+      setState(() {
+          passworderrors = false;
+          passwordmessage = '';
+          validform = true;
+      });
+    
+    }
+    if (validform) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text("Successfully Logged In,Welcome Back"),
+        backgroundColor: Colors.green.shade600,
+      ));
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,29 +82,35 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset('assets/diamond.png'),
                 const SizedBox(height: 16.0),
-              Text(
+                Text(
                   'Kipbz Collections',
-                   style: Theme.of(context).textTheme.headlineSmall,),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
               ],
             ),
             const SizedBox(height: 120.0),
             TextField(
               controller: _userNameController,
-              decoration:
-                  const InputDecoration(
-                    labelText: "UserName"
-                    ),
+              decoration: const InputDecoration(labelText: "UserName"),
             ),
+            emailerrors
+                ? Text(
+                    emailmessage,
+                    style: const TextStyle(color: Colors.red),
+                  )
+                : const Text(''),
             const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
-              decoration: 
-                     const InputDecoration(
-                      labelText: "Password"
-                      ),
+              decoration: const InputDecoration(labelText: "Password"),
               obscureText: true,
             ),
-           
+            passworderrors
+                ? Text(
+                    passwordmessage,
+                    style: const TextStyle(color: Colors.red),
+                  )
+                : const Text(''),
             const SizedBox(height: 12.0),
             OverflowBar(
               alignment: MainAxisAlignment.end,
@@ -71,21 +121,20 @@ class _LoginPageState extends State<LoginPage> {
                       _passwordController.clear();
                     },
                     style: TextButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.secondary
-                    ),
+                        primary: Theme.of(context).colorScheme.secondary),
                     child: const Text("Clear")),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Next"),
-                    style: ElevatedButton.styleFrom(
+                  onPressed: () {
+                    // Navigator.pop(context);
+
+                    _loginUser();
+                  },
+                  child: const Text("Next"),
+                  style: ElevatedButton.styleFrom(
                       foregroundColor: kKipbzCollectionsBrown900,
                       backgroundColor: kKipbzCollectionsPink100,
-                      elevation: 8.0
-                    ),
-                    
-                    )
+                      elevation: 8.0),
+                )
               ],
             )
           ],

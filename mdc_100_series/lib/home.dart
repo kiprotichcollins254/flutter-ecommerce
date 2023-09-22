@@ -30,9 +30,9 @@ class HomePage extends StatelessWidget {
 
     final ThemeData theme = Theme.of(context);
     final NumberFormat formatter = NumberFormat.simpleCurrency(
-      locale: Localizations.localeOf(context).toString());
+        locale: Localizations.localeOf(context).toString());
 
-    return products.map((product){
+    return products.map((product) {
       return Card(
         clipBehavior: Clip.antiAlias,
         elevation: 0.0,
@@ -45,24 +45,49 @@ class HomePage extends StatelessWidget {
                   product.assetName,
                   package: product.assetPackage,
                   fit: BoxFit.fitWidth,
-                  )),
+                )),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(product.name,style: theme.textTheme.titleLarge,softWrap: false,overflow: TextOverflow.ellipsis,maxLines: 1),
+                  Text(product.name,
+                      style: theme.textTheme.titleLarge,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1),
                   const SizedBox(height: 4.0),
-                  Text(formatter.format(product.price),style: theme.textTheme.titleSmall),
+                  Text(formatter.format(product.price),
+                      style: theme.textTheme.titleSmall),
+                  const SizedBox(height: 2.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: const Text("Added To Cart"),backgroundColor: Colors.green.shade600,));
+                          },
+                          icon: const Icon(Icons.add_shopping_cart,
+                              semanticLabel: "Add To Cart")),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/item');
+                          },
+                          icon: const Icon(
+                            Icons.remove_red_eye_rounded,
+                            semanticLabel: "view product",
+                          ))
+                    ],
+                  )
                 ],
               ),
             )
           ],
         ),
       );
-    } ).toList();
-    
+    }).toList();
   }
 
   // TODO: Add a variable for Category (104)
@@ -71,34 +96,10 @@ class HomePage extends StatelessWidget {
     // TODO: Return an AsymmetricView (104)
     // TODO: Pass Category variable to AsymmetricView (104)
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            semanticLabel: "menu",
-          ),
-          onPressed: () {
-            print("menu button");
-          },
-        ),
-        title: const Text("Kipbz Collections"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print("search");
-              },
-              icon: const Icon(Icons.search, semanticLabel: "search")),
-          IconButton(
-              onPressed: () {
-                print("filter");
-              },
-              icon: const Icon(Icons.tune, semanticLabel: "filter"))
-        ],
-      ),
       body: GridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(16.0),
-          childAspectRatio: 8.0 / 9.0,
+          childAspectRatio: 8.0 / 12.0,
           children: _buildGridCards(context)),
       // this ensures that the keyboard's appearance does not alter the size of the home page or its widgets.
       resizeToAvoidBottomInset: false,

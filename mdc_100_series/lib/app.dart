@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-
+import 'package:shrine/item.dart';
+import 'backdrop.dart';
+import 'model/product.dart';
 import 'home.dart';
 import 'login.dart';
 import 'theme/colors.dart';
@@ -29,8 +31,14 @@ class ShrineApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (BuildContext context) => const LoginPage(),
+        '/item' :(BuildContext context) => const Item(),
         // TODO: Change to a Backdrop with a HomePage frontLayer (104)
-        '/': (BuildContext context) => const HomePage(),
+        '/': (BuildContext context) => Backdrop(
+          currentCategory: Category.all,
+          frontLayer: HomePage(), 
+          backLayer: Container(color: kKipbzCollectionsPink100,), 
+          frontTitle: Text('Kipbz Collections'), 
+          backTitle: Text("Menu")),
         // TODO: Make currentCategory field take _currentCategory (104)
         // TODO: Pass _currentCategory for frontLayer (104)
         // TODO: Change backLayer field value to CategoryMenuPage (104)
@@ -46,30 +54,30 @@ final ThemeData _kipbzCollectionsTheme = _buildKCollectionsTheme();
 ThemeData _buildKCollectionsTheme() {
   final ThemeData base = ThemeData.light(useMaterial3: true);
   return base.copyWith(
-    colorScheme: base.colorScheme.copyWith(
-      primary: kKipbzCollectionsPink100,
-      onPrimary: kKipbzCollectionsBrown900,
-      secondary: kKipbzCollectionsBrown900,
-      error: kKipbzCollectionsErrorRed,
-    ),
-    // TODO:ADD THE TEXT THEME
-    textTheme: _buildKipbzTextTheme(base.textTheme),
-    textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: kKipbzCollectionsPink100,
-    ),
-    inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: kKipbzCollectionsBrown900
-        )
+      colorScheme: base.colorScheme.copyWith(
+        primary: kKipbzCollectionsPink100,
+        onPrimary: kKipbzCollectionsBrown900,
+        secondary: kKipbzCollectionsBrown900,
+        error: kKipbzCollectionsErrorRed,
       ),
-      floatingLabelStyle: TextStyle(
-        color: kKipbzCollectionsBrown900,
+  
+      textTheme: _buildKipbzTextTheme(base.textTheme),
+      textSelectionTheme: const TextSelectionThemeData(
+        selectionColor: kKipbzCollectionsPink100,
       ),
-    )
-  );
+      appBarTheme: const AppBarTheme(
+        foregroundColor: kKipbzCollectionsBrown900,
+        backgroundColor: kKipbzCollectionsPink100,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(width: 2.0, color: kKipbzCollectionsBrown900)),
+        floatingLabelStyle: TextStyle(
+          color: kKipbzCollectionsBrown900,
+        ),
+      ));
 }
 
 TextTheme _buildKipbzTextTheme(TextTheme base) {
